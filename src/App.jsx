@@ -9,7 +9,7 @@ function App() {
       <BrowserRouter>
         <Routes>
           <Route path={"/"} element={<WikipageList />}></Route>
-          <Route path={"/wikipage"} element={<WikipageDetail />}></Route>
+          <Route path={"/wikipage/:id"} element={<WikipageDetail />}></Route>
         </Routes>
       </BrowserRouter>
     </>

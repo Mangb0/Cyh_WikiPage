@@ -1,7 +1,11 @@
+import { useParams } from "react-router-dom";
+
 const WikipageDetail = () => {
+  const { id } = useParams();
   return (
     <div>
-      <h1>Wikipage Detail</h1>
+      <h1>Wikipage{id} Detail</h1>
+      <p>Wikipage{id} content</p>
     </div>
   );
 };
