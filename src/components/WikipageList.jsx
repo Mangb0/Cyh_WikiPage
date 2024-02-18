@@ -1,32 +1,25 @@
-import axios from "axios";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import WikipageWrite from "./WikipageWrite";
+import useWiki from "../hooks/useWiki";
 
 const WikipageList = () => {
   const [wikipageList, setWikipageList] = useState([]);
-  const [isLoading, setIsLoading] = useState(true);
   const [isWriteOpened, setIsWriteOpened] = useState(false);
-
-  const getWikipageList = async () => {
-    const res = await axios.get("http://localhost:3001/wikipage");
-    setWikipageList(res.data);
-    console.log(res.data);
-    setIsLoading(false);
-  };
 
   const writeModalOpened = () => {
     setIsWriteOpened(true);
   };
 
-  const wirteModalClosed = () => {
+  const writeModalClosed = () => {
     setIsWriteOpened(false);
-    getWikipageList();
   };
 
   useEffect(() => {
-    getWikipageList();
-  }, []);
+    getWikipageList().then((res) => setWikipageList(res));
+  }, [isWriteOpened]);
+
+  const { getWikipageList, isLoading } = useWiki();
 
   return (
     <div>
@@ -46,7 +39,7 @@ const WikipageList = () => {
       </ul>
       <WikipageWrite
         isWriteOpened={isWriteOpened}
-        wirteModalClosed={wirteModalClosed}
+        writeModalClosed={writeModalClosed}
       />
       <button onClick={writeModalOpened}>추가</button>
     </div>
