@@ -8,8 +8,14 @@ const WikipageDetail = () => {
 
   const [isUpdate, setIsUpdate] = useState(false);
 
-  const { wikipageObj, getWikipageDetail, updateWikipage, isLoading } =
-    useWiki();
+  const {
+    wikipageList,
+    wikipageObj,
+    getWikipageList,
+    getWikipageDetail,
+    updateWikipage,
+    isLoading,
+  } = useWiki();
 
   const handleUpdate = async (obj) => {
     await updateWikipage(id, obj);
@@ -19,7 +25,21 @@ const WikipageDetail = () => {
   useEffect(() => {
     if (isUpdate) return;
     getWikipageDetail(id);
+    getWikipageList();
   }, [isUpdate]);
+
+  const renderContentWithLinks = (wikipageContent) => {
+    let modifiedContent = wikipageContent;
+    wikipageList.forEach((v) => {
+      const { id, title, _ } = v;
+      modifiedContent = modifiedContent.replace(
+        title,
+        `<a href="/wikipage/${id}">${title}</a>`
+      );
+    });
+
+    return { __html: modifiedContent };
+  };
 
   return (
     <>
@@ -34,7 +54,11 @@ const WikipageDetail = () => {
         <>
           <div>
             <h1>{wikipageObj.title}</h1>
-            <p>{wikipageObj.content}</p>
+            <div
+              dangerouslySetInnerHTML={renderContentWithLinks(
+                wikipageObj.content
+              )}
+            ></div>
           </div>
           <button onClick={() => setIsUpdate(true)}>수정</button>
         </>
