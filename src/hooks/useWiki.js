@@ -2,6 +2,7 @@ import axios from "axios";
 import { useState } from "react";
 
 const useWiki = () => {
+  const [wikipageList, setWikipageList] = useState([]);
   const [wikipageObj, setWikipageObj] = useState({
     title: "",
     content: "",
@@ -11,6 +12,7 @@ const useWiki = () => {
   const getWikipageList = async () => {
     setIsLoading(true);
     const res = await axios.get("http://localhost:3001/wikipage");
+    setWikipageList(res.data);
     setIsLoading(false);
     return res.data;
   };
@@ -37,6 +39,7 @@ const useWiki = () => {
     writeWikipage,
     updateWikipage,
     isLoading,
+    wikipageList,
     wikipageObj,
   };
 };
