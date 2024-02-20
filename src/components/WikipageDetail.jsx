@@ -32,7 +32,7 @@ const WikipageDetail = () => {
     let modifiedContent = contentText;
     wikipageList.forEach((v) => {
       const { id, title } = v;
-      const regex = new RegExp(`(?:<[^>]*>.*?<\\/[^>]*>)|Wikipage6`, "g");
+      const regex = new RegExp(`(?:<[^>]*>.*?<\\/[^>]*>)|${title}`, "g");
       modifiedContent = modifiedContent.replace(regex, (match) => {
         return match === title
           ? `<a href="/wikipage/${id}">${title}</a>`
